@@ -1,0 +1,182 @@
+{
+  "info": {
+    "_postman_id": "d10d12fc-5503-4e3e-8d19-d75f0a13a855",
+    "name": "Library Application",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "18025519"
+  },
+  "item": [
+    {
+      "name": "Add Book",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \" Fire Wings\",\n    \"genere\": \"Novel\",\n    \"author\": {\n        \"firstName\": \"Dravid\",\n        \"bio\": \"Nature inspire\",\n        \"genere\": \"Novel\",\n        \"email\": \"dravid@123.com\"\n    }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/api/books/addBook",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "api",
+            "books",
+            "addBook"
+          ]
+        },
+        "description": "Generated from cURL: curl --location 'http://localhost:8080/api/books/addBook' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n    \"title\": \" Fire Wings\",\n    \"genere\": \"Novel\",\n    \"author\": {\n        \"firstName\": \"Dravid\",\n        \"bio\": \"Nature inspire\",\n        \"genere\": \"Novel\",\n        \"email\": \"dravid@123.com\"\n    }\n}'"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Author Details",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"firstName\": \"Shankar\",\n    \"lastName\": \"Mahadevan\",\n    \"bio\": \"Exploring Adventure\",\n    \"genere\": \"Novel\",\n    \"email\": \"shakmaha@123.com\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/api/books/authors/update/1",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "api",
+            "books",
+            "authors",
+            "update",
+            "1"
+          ]
+        },
+        "description": "Generated from cURL: curl --location --request PUT 'http://localhost:8080/api/books/authors/update/1' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n    \"firstName\": \"Shankar\",\n    \"lastName\": \"Mahadevan\",\n    \"bio\": \"Exploring Adventure\",\n    \"genere\": \"Novel\",\n    \"email\": \"shakmaha@123.com\"\n}'"
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Books",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/api/books/getAllBooks",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "api",
+            "books",
+            "getAllBooks"
+          ]
+        },
+        "description": "Generated from cURL: curl --location 'http://localhost:8080/api/books/getAllBooks'"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Book by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/api/books/getBook/5",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "api",
+            "books",
+            "getBook",
+            "5"
+          ]
+        },
+        "description": "Generated from cURL: curl --location 'http://localhost:8080/api/books/getAllBooks'"
+      },
+      "response": []
+    },
+    {
+      "name": "Search based on Authors",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/api/books/authors/search?name=Liam",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "api",
+            "books",
+            "authors",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "name",
+              "value": "Liam"
+            }
+          ]
+        },
+        "description": "Generated from cURL: curl --location 'http://localhost:8080/api/books/authors/search?name=Dravid'"
+      },
+      "response": []
+    },
+    {
+      "name": "Filter Based on Author name and Genre",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/api/books/authors/search?name=Dravid",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "api",
+            "books",
+            "authors",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "name",
+              "value": "Dravid"
+            }
+          ]
+        },
+        "description": "Generated from cURL: curl --location 'http://localhost:8080/api/books/authors/search?name=Dravid'"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseURL",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}
