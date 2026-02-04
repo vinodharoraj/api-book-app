@@ -29,7 +29,7 @@ public class BookController {
     }
 
     @GetMapping("/filterBooks")
-    public Map<String, List<BookResponseDTO>> filterBooks(@RequestParam String author, @RequestParam String genre) {
+    public Map<String, List<BookResponseDTO>> filterBooks(@RequestParam(required = true) String author, @RequestParam(required = true) String genre) {
         return bookService.getFilteredBooks(author,genre);
     }
 

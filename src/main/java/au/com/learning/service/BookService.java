@@ -113,6 +113,11 @@ public class BookService implements BookServiceIF{
 
     @Transactional(readOnly = true)
     public List<BookResponseDTO> getFilteredBooksByAuthorAndGenre(String author, String genre){
+
+        if (StringUtils.isBlank(genre) || StringUtils.isBlank(author)) {
+            throw new IllegalArgumentException("Both 'author' and 'genre' parameters are required for filtering.");
+        }
+
         Specification<Book> bookSpecification = Specification.where(null);
 
         if(!StringUtils.isBlank(author)){
