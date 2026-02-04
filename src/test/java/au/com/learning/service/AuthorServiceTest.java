@@ -86,7 +86,7 @@ class AuthorServiceTest {
         when(authorRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase("x", "x"))
                 .thenReturn(Collections.emptyList());
 
-        // Act & Assert
+
         RuntimeException ex = assertThrows(RuntimeException.class, () -> authorService.getAuthorsByName("x"));
         assertTrue(ex.getMessage().toLowerCase().contains("author"));
         verify(authorRepository, times(1))
@@ -104,7 +104,7 @@ class AuthorServiceTest {
         existing.setEmail("old@test.com");
         existing.setBio("Old bio");
         existing.setGenere("Old genere");
-        existing.setBooks(Collections.emptyList()); // prevent NPE
+        existing.setBooks(Collections.emptyList());
 
         Author update = new Author();
         update.setFirstName("New");
@@ -112,7 +112,7 @@ class AuthorServiceTest {
         update.setEmail("new@test.com");
         update.setBio("New bio");
         update.setGenere("New genere");
-        update.setBooks(Collections.emptyList()); // optional
+        update.setBooks(Collections.emptyList());
 
         when(authorRepository.findById(id)).thenReturn(Optional.of(existing));
         when(authorRepository.existsByEmailAndIdNot("new@test.com", id)).thenReturn(false);
@@ -156,7 +156,7 @@ class AuthorServiceTest {
         when(authorRepository.findById(id)).thenReturn(Optional.of(existing));
         when(authorRepository.existsByEmailAndIdNot("dup@test.com", id)).thenReturn(true);
 
-        // Make validator throw the expected error (service calls validator first)
+
         doThrow(new IllegalArgumentException("Author email is already in use"))
                 .when(authorValidator).validateForUpdate(eq(id), eq(update), eq(existing));
 
@@ -192,13 +192,13 @@ class AuthorServiceTest {
         existing.setLastName("Name");
 
         Author badUpdate = new Author();
-        badUpdate.setFirstName("  "); // blank
-        badUpdate.setLastName(null);  // null
-        badUpdate.setEmail("  ");     // blank
+        badUpdate.setFirstName("  ");
+        badUpdate.setLastName(null);
+        badUpdate.setEmail("  ");
 
         when(authorRepository.findById(id)).thenReturn(Optional.of(existing));
 
-        // Force validation failure before any save happens
+
         doThrow(new IllegalArgumentException("Invalid author input"))
                 .when(authorValidator).validateForUpdate(eq(id), eq(badUpdate), eq(existing));
 

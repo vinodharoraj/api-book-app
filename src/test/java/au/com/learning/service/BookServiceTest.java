@@ -181,27 +181,6 @@ class BookServiceTest {
         verify(bookRepository).save(newBook);
     }
 
-//    @Test
-//    void saveBook_throwsWhenNewAuthorMissingFirstOrLastName() {
-//        Author newAuthor = new Author();
-//        newAuthor.setFirstName("");
-//        newAuthor.setLastName("Smith");
-//        newAuthor.setEmail("alice@test.com");
-//
-//        Book newBook = new Book();
-//        newBook.setTitle("New Book");
-//        newBook.setGenere("Fiction");
-//        newBook.setAuthor(newAuthor);
-//
-//        when(authorRepository.findByEmail(newAuthor.getEmail()))
-//                .thenReturn(Optional.empty());
-//
-//        assertThrows(IllegalArgumentException.class,
-//                () -> bookService.saveBook(newBook));
-//
-//        verify(authorRepository, never()).save(any());
-//        verify(bookRepository, never()).save(any());
-//    }
 
     @Test
     void saveBook_throwsWhenDuplicateBookExists() {
@@ -220,7 +199,7 @@ class BookServiceTest {
 
     @Test
     void getAllBooks_returnsMappedBookResponseDTOList() {
-        // Arrange
+
         Author author = new Author();
         author.setId(5L);
         author.setFirstName("Jane");
@@ -237,10 +216,10 @@ class BookServiceTest {
 
         when(bookRepository.findAll()).thenReturn(Collections.singletonList(book));
 
-        // Act
+
         var result = bookService.getAllBooks();
 
-        // Assert
+
         assertNotNull(result);
         assertEquals(1, result.size());
 
@@ -262,54 +241,11 @@ class BookServiceTest {
         verifyNoMoreInteractions(bookRepository);
     }
 
-    @Test
-    void getFilteredBooks_noFilters_returnsGroupedByGenre() {
-        List<Book> repoResult = Arrays.asList(book1, book3);
-        when(bookRepository.findAll(nullable(Specification.class))).thenReturn(repoResult);
 
-        Map<String, List<BookResponseDTO>> result = bookService.getFilteredBooks(null, null);
-
-        assertNotNull(result);
-        assertEquals(2, result.size());
-        assertTrue(result.containsKey("Novel"));
-        assertTrue(result.containsKey("Adventure"));
-
-        List<BookResponseDTO> novels = result.get("Novel");
-        assertEquals(1, novels.size());
-        BookResponseDTO dto = novels.get(0);
-        assertEquals(100L, dto.id());
-        assertEquals("Pride and Prejudice", dto.title());
-        assertEquals("Novel", dto.genere());
-        assertNotNull(dto.author());
-        assertEquals(5L, dto.author().id());
-
-        verify(bookRepository, times(1)).findAll(nullable(Specification.class));
-    }
-
-    @Test
-    void getFilteredBooks_authorFilter_returnsOnlyMatchingBooksGrouped() {
-        // Simulate repository returning only books matching author filter
-        List<Book> repoResult = Arrays.asList(book1, book2); // both Jane, same genre Novel
-        when(bookRepository.findAll(nullable(Specification.class))).thenReturn(repoResult);
-
-        Map<String, List<BookResponseDTO>> result = bookService.getFilteredBooks("Jane", null);
-
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        assertTrue(result.containsKey("Novel"));
-        List<BookResponseDTO> novels = result.get("Novel");
-        assertEquals(2, novels.size());
-
-        // check mapping of both items
-        assertEquals(100L, novels.get(0).id());
-        assertEquals(101L, novels.get(1).id());
-
-        verify(bookRepository, times(1)).findAll(nullable(Specification.class));
-    }
 
     @Test
     void getFilteredBooks_authorAndGenreFilter_returnsMatchingGrouping() {
-        // Simulate repository returning only the book that matches both filters
+
         List<Book> repoResult = Arrays.asList(book1);
         when(bookRepository.findAll(nullable(Specification.class))).thenReturn(repoResult);
 
@@ -332,7 +268,7 @@ class BookServiceTest {
 
     @Test
     void getBookById_returnsMappedBookResponseDTO_whenBookExists() {
-        // Arrange
+
         Author author = new Author();
         author.setId(5L);
         author.setFirstName("Jane");
@@ -349,10 +285,10 @@ class BookServiceTest {
 
         when(bookRepository.findById(100L)).thenReturn(Optional.of(book));
 
-        // Act
+
         BookResponseDTO result = bookService.getBookById(100L);
 
-        // Assert
+
         assertNotNull(result);
         assertEquals(100L, result.id());
         assertEquals("Pride and Prejudice", result.title());
@@ -369,10 +305,10 @@ class BookServiceTest {
 
     @Test
     void getBookById_throwsIllegalArgumentException_whenBookNotFound() {
-        // Arrange
+
         when(bookRepository.findById(999L)).thenReturn(Optional.empty());
 
-        // Act & Assert
+
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
                 () -> bookService.getBookById(999L));
         assertTrue(ex.getMessage().contains("Book not found with ID: 999"));

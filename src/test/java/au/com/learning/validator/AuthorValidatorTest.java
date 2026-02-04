@@ -18,7 +18,7 @@ class AuthorValidatorTest {
     void setup() {
         authorRepository = mock(AuthorRepository.class);
         authorValidator = new AuthorValidator();
-        // Inject mock via reflection since field is \@Autowired
+
         try {
             var field = AuthorValidator.class.getDeclaredField("authorRepository");
             field.setAccessible(true);
@@ -37,8 +37,8 @@ class AuthorValidatorTest {
         existing.setEmail("old@test.com");
 
         Author req = new Author();
-        req.setEmail("dup@test.com"); // changed email
-        req.setFirstName("A");        // valid name
+        req.setEmail("dup@test.com");
+        req.setFirstName("A");
 
         when(authorRepository.existsByEmailAndIdNot("dup@test.com", id)).thenReturn(true);
 
@@ -77,9 +77,9 @@ class AuthorValidatorTest {
         existing.setEmail("old@test.com");
 
         Author req = new Author();
-        req.setEmail("old@test.com"); // unchanged, no repository call
-        req.setFirstName("   ");      // blank
-        req.setLastName(null);        // null
+        req.setEmail("old@test.com");
+        req.setFirstName("   ");
+        req.setLastName(null);
 
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
                 () -> authorValidator.validateForUpdate(id, req, existing));
@@ -97,13 +97,13 @@ class AuthorValidatorTest {
 
         Author req1 = new Author();
         req1.setEmail("old@test.com");
-        req1.setFirstName("John"); // first provided
-        req1.setLastName("   ");   // blank last
+        req1.setFirstName("John");
+        req1.setLastName("   ");
 
         Author req2 = new Author();
         req2.setEmail("old@test.com");
-        req2.setFirstName("   ");  // blank first
-        req2.setLastName("Doe");   // last provided
+        req2.setFirstName("   ");
+        req2.setLastName("Doe");
 
         assertDoesNotThrow(() -> authorValidator.validateForUpdate(id, req1, existing));
         assertDoesNotThrow(() -> authorValidator.validateForUpdate(id, req2, existing));
