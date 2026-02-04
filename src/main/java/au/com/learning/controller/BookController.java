@@ -18,7 +18,7 @@ public class BookController {
     @Autowired
     private BookServiceIF bookService;
 
-    @GetMapping("getBook/{id}")
+    @GetMapping("/getBook/{id}")
     public BookResponseDTO getBookById(@PathVariable Long id) {
         return bookService.getBookById(id);
     }
